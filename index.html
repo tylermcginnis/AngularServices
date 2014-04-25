@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    
+  </head>
+  <body>
+    <div ng-controller="myServiceCtrl">
+    <h1> Service </h1>
+      Pick your Arist: <input type="text" ng-model="data.artist" placeholder="Artist" ng-change="updateArtist()">
+      <button ng-click="submitArtist()">Submit</button>
+      {{data.artistData}}
+    </div>
+
+    <div ng-controller="myFactoryCtrl">
+    <h1>Factory</h1>
+      Pick your Arist: <input type="text" ng-model="data.artist" placeholder="Artist" ng-change="updateArtist()">
+      <button ng-click="submitArtist()">Submit</button>
+      {{data.artistData}}
+    </div>
+
+    <div ng-controller="myProviderCtrl">
+    <h1>Provider</h1>
+    <h3>*Provider is the only service we can inject to the config function and establish an initial value. For example, if you wanted to inject your API key into your service at run time, you would have to use Provider. *The sentence below was set in the config function</h3>
+      Pick your Arist: <input type="text" ng-model="data.artist" placeholder="Artist" ng-change="updateArtist()">
+      <button ng-click="submitArtist()">Submit</button>
+      {{data.artistData}}
+
+      <br>
+      {{data.thingFromConfig}}
+    </div>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.15/angular.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
