@@ -22,18 +22,18 @@ app.service('myService', function($http, $q){
   var _artist = '';
   var _finalUrl = '';
 
+  var makeUrl = function(){
+    _artist = _artist.split(' ').join('+');
+    _finalUrl = baseUrl + _artist + '&callback=JSON_CALLBACK'
+    return _finalUrl;
+  }
+
   this.setArtist = function(artist){
     _artist = artist;
   }
 
   this.getArtist = function(){
     return _artist;
-  }
-
-  var makeUrl = function(){
-    _artist = _artist.split(' ').join('+');
-    _finalUrl = baseUrl + _artist + '&callback=JSON_CALLBACK'
-    return _finalUrl;
   }
 
   this.callItunes = function(){
@@ -132,28 +132,27 @@ app.controller('myProviderCtrl', function($scope, myProvider){
 });
 
 app.provider('myProvider', function(){
-  this.baseUrl = 'https://itunes.apple.com/search?term=';
-  this._artist = '';
-  this._finalUrl = '';
+  var baseUrl = 'https://itunes.apple.com/search?term=';
+  var _artist = '';
+  var _finalUrl = '';
 
   //Going to set this property on the config function below
-  this.thingFromConfig = '';
+  var thingFromConfig = '';
 
-  this.makeUrl = function(){
-    this._artist = this._artist.split(' ').join('+');
-    this._finalUrl = this.baseUrl + this._artist + '&callback=JSON_CALLBACK'
-    return this._finalUrl;
+  var makeUrl = function(){
+    _artist = _artist.split(' ').join('+');
+    _finalUrl = baseUrl + _artist + '&callback=JSON_CALLBACK'
+    return _finalUrl;
   }
 
   this.$get = function($http, $q){
-    var that = this;
     return {
       callItunes: function(){
-        that.makeUrl();
+        makeUrl();
         var deferred = $q.defer();
         $http({
           method: 'JSONP',
-          url: that._finalUrl
+          url: _finalUrl
         }).success(function(data){
           deferred.resolve(data);
         }).error(function(){
@@ -162,12 +161,12 @@ app.provider('myProvider', function(){
         return deferred.promise;
       },
       setArtist: function(artist){
-        that._artist = artist;
+        _artist = artist;
       },
       getArtist: function(){
-        return that._artist;
+        return _artist;
       },
-      thingOnConfig: that.thingFromConfig
+      thingOnConfig: thingFromConfig
     }
   }
 });
