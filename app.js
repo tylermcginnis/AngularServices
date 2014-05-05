@@ -137,7 +137,7 @@ app.provider('myProvider', function(){
   var _finalUrl = '';
 
   //Going to set this property on the config function below
-  var thingFromConfig = '';
+  this.thingFromConfig = '';
 
   var makeUrl = function(){
     _artist = _artist.split(' ').join('+');
@@ -166,7 +166,7 @@ app.provider('myProvider', function(){
       getArtist: function(){
         return _artist;
       },
-      thingOnConfig: thingFromConfig
+      thingOnConfig: this.thingFromConfig
     }
   }
 });
